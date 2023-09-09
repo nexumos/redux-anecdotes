@@ -35,7 +35,9 @@ export const createAnecdote = (anecdote) => {
   };
 };
 
-const initialState = anecdotesAtStart.map(asObject);
+const initialState = anecdotesAtStart
+  .map(asObject)
+  .toSorted((a, b) => b.votes - a.votes);
 
 const reducer = (state = initialState, action) => {
   console.log("state now: ", state);
@@ -47,13 +49,13 @@ const reducer = (state = initialState, action) => {
         ...anecdoteToVoteFor,
         votes: anecdoteToVoteFor.votes + 1,
       };
-      return state.map((n) =>
-        n.id !== action.payload.id ? n : changedAnecdote
-      );
+      return state
+        .map((n) => (n.id !== action.payload.id ? n : changedAnecdote))
+        .toSorted((a, b) => b.votes - a.votes);
     case "CREATE":
-      return state.concat(action.payload);
+      return state.concat(action.payload).toSorted((a, b) => b.votes - a.votes);
     default:
-      return state;
+      return state.toSorted((a, b) => b.votes - a.votes);
   }
 };
 
