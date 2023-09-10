@@ -67,12 +67,14 @@ const anecdoteSlice = createSlice({
   reducers: {
     createAnecdote(state, action) {
       const content = action.payload;
-      state
-        .push({
-          content,
-          votes: 0,
-          id: getId(),
-        })
+      return state
+        .concat([
+          {
+            content,
+            votes: 0,
+            id: getId(),
+          },
+        ])
         .sort((a, b) => b.votes - a.votes);
     },
     voteFor(state, action) {
@@ -83,7 +85,7 @@ const anecdoteSlice = createSlice({
         votes: anecdoteToChange.votes + 1,
       };
       return state
-        .map((note) => (note.id !== id ? note : changedAnecdote))
+        .map((n) => (n.id !== id ? n : changedAnecdote))
         .sort((a, b) => b.votes - a.votes);
     },
   },
