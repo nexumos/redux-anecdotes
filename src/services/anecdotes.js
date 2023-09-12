@@ -26,16 +26,4 @@ const vote = async (id) => {
   return response.data.sort((a, b) => b.votes - a.votes);
 };
 
-/*
-      const id = action.payload;
-      const anecdoteToChange = state.find((n) => n.id === id);
-      const changedAnecdote = {
-        ...anecdoteToChange,
-        votes: anecdoteToChange.votes + 1,
-      };
-      return state
-        .map((n) => (n.id !== id ? n : changedAnecdote))
-        .sort((a, b) => b.votes - a.votes);
-*/
-
 export default { getAll, createNew, vote };
